@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 
 import './App.css';
 
@@ -6,6 +6,7 @@ function App() {
   const [inputWords ,setinputWords] = useState("")
   const [remainin,setRemaing] = useState(0)
   const [counter ,setCounter] = useState()
+  const inputRef = useRef(null)
   const typingWords =(e)=>{
     const {value} = e.target
     setinputWords(prevWords => value )
@@ -28,6 +29,7 @@ function App() {
    setCounter(prevcounter => 0)
    document.querySelector("button").disabled= true
    document.querySelector("textarea").disabled= false
+   inputRef.current.focus()
  }
 
   const countWords = () =>{
@@ -37,7 +39,7 @@ function App() {
   return (
     <div>
       <h1> Speed Text </h1>
-      <textarea name="inputWords" disabled={counter !=0?true:false} value={inputWords}  onChange={typingWords}/>
+      <textarea ref={inputRef} name="inputWords" disabled={counter !=0?true:false} value={inputWords}  onChange={typingWords}/>
       <h4>time Remainng {remainin !=0?remainin : 0}</h4>
       <button onClick={start} >start Game</button>
        <h1>Count {counter !=1?counter:0}</h1>
